@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.gameboard-area {
+    display: flex;
+    justify-content: space-around;
+    gap: 4rem;
+    margin-bottom: 2rem;
+}
+
+.square {
+    width: 55px;
+    height: 55px;
+    background-color: lightblue;
+    border: solid 1px black;
+}
+
+.your-ships, .firing-area {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.two,
+.three,
+.four,
+.six {
+    display: flex;
+}
+
+.unplayed-ship {
+    transition: .25s ease-in-out;
+}
+
+.ship-piece {
+    background-color: gray;
+}
+
+.rotated {
+    rotate: 90deg;
+}
+
+.placeable-ships {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.small-ships, .big-ships {
+    display: flex;
+    gap: 6rem;
+    cursor: move;
+}

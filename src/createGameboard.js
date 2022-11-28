@@ -1,3 +1,6 @@
+import Ship from "./classes/ship.js";
+import { gameboard } from "./index.js";
+
 export default function createGameboard() {
     const yourShips = document.querySelector(".your-ships");
     const firingArea = document.querySelector(".firing-area");
@@ -133,6 +136,8 @@ function placeShips(squares, dragging) {
             squares[i].classList.add("played-ship");
             dragging.remove();
         }
+        const ship = new Ship(squares.length, squares, false);
+        gameboard.updatePlayerShipLocations(ship.squares);
     }
     else {
         return;

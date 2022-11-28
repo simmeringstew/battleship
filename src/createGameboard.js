@@ -42,16 +42,27 @@ function getShipData(currentSquare) {
                 const neighbor = parentRow.querySelector(`[data-key="${index - 1}"]`);
                 squares = [neighbor, currentSquare];
                 placeShips(squares, dragging);
-    
             }
             else if (length === 3) {
-        
+                const previousNeighbor = parentRow.querySelector(`[data-key="${index - 1}"]`);
+                const nextNeighbor = parentRow.querySelector(`[data-key="${index + 1}"]`);
+                squares = [previousNeighbor, currentSquare, nextNeighbor];
+                placeShips(squares, dragging);
             }
             else if (length === 4) {
-        
+                const secondPreviousNeighbor = parentRow.querySelector(`[data-key="${index - 2}"]`);
+                const previousNeighbor = parentRow.querySelector(`[data-key="${index - 1}"]`);
+                const nextNeighbor = parentRow.querySelector(`[data-key="${index + 1}"]`);
+                squares = [secondPreviousNeighbor, previousNeighbor, currentSquare, nextNeighbor];
+                placeShips(squares, dragging);
             }
             else if (length === 5) {
-        
+                const secondPreviousNeighbor = parentRow.querySelector(`[data-key="${index - 2}"]`);
+                const previousNeighbor = parentRow.querySelector(`[data-key="${index - 1}"]`);
+                const nextNeighbor = parentRow.querySelector(`[data-key="${index + 1}"]`);
+                const secondNextNeighbor = parentRow.querySelector(`[data-key="${index + 2}"]`);
+                squares = [secondPreviousNeighbor, previousNeighbor, currentSquare, nextNeighbor, secondNextNeighbor];
+                placeShips(squares, dragging);
             }
         }
         catch (e) {

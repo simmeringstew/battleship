@@ -17,9 +17,21 @@ ships.forEach((ship) => {
     ship.addEventListener("dblclick", () => {
         if (ship.classList.contains("rotated")) {
             ship.classList.remove("rotated");
+            ship.classList.remove("vertical");
         }
         else {
             ship.classList.add("rotated");
+            ship.classList.add("vertical");
         }
+    });
+});
+
+const draggables = document.querySelectorAll("[draggable='true']");
+draggables.forEach((item) => {
+    item.addEventListener("dragstart", () => {
+        item.classList.add("dragging");
+    });
+    item.addEventListener("dragend", () => {
+        item.classList.remove("dragging");
     });
 });

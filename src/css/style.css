@@ -18,7 +18,11 @@ h1 {
     margin-bottom: 2rem;
 }
 
-.square {
+.row {
+    display: flex;
+}
+
+.player-square, .firing-square, .square {
     width: 55px;
     height: 55px;
     background-color: lightblue;
@@ -27,18 +31,15 @@ h1 {
 
 .your-ships, .firing-area {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: 1fr;
+    grid-template-rows: 10;
 }
 
 .two,
 .three,
 .four,
-.six {
+.five {
     display: flex;
-}
-
-.unplayed-ship {
-    transition: .25s ease-in-out;
 }
 
 .ship-piece {
@@ -46,7 +47,7 @@ h1 {
 }
 
 .rotated {
-    rotate: 90deg;
+    flex-direction: column;
 }
 
 .placeable-ships {
@@ -60,4 +61,8 @@ h1 {
     display: flex;
     gap: 6rem;
     cursor: move;
+}
+
+.dragging {
+    opacity: .5;
 }

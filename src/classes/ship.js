@@ -19,6 +19,9 @@ export default class Ship {
         }
         this.coordinates.push(shipCoordinates);
         }
+        else {
+            this.coordinates.push(shipData);
+        }
     }
     hit() {
         this.health--;

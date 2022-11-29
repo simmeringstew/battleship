@@ -6,10 +6,9 @@ export default class Gameboard {
     }
     updatePlayerShipLocations(ship) {
         this.playerShipLocations.push(ship);
-        console.log(this.playerShipLocations);
     }
     updateComputerShipLocations(ship) {
-        
+        this.computerShipLocations.push(ship);
     }
     updatePlayedTiles() {
         return this.playedTiles;

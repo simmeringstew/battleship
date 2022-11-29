@@ -6,6 +6,9 @@ import Computer from "./classes/computer.js";
 import createGameboard from "./createGameboard.js";
 import createPlayerShips from "./createPlayerShips.js";
 
+const gameInfo = document.querySelector("H1");
+
+export let alreadyPlacedCoordinates = [];
 export const gameboard = new Gameboard();
 
 window.onload = () => {

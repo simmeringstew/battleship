@@ -66,3 +66,15 @@ h1 {
 .dragging {
     opacity: .5;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+#miss {
+    background-color: white;
+}
+
+#hit {
+    background-color: red;
+}

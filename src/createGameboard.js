@@ -1,5 +1,5 @@
 import Ship from "./classes/ship.js";
-import { gameboard, gameLoop } from "./index.js";
+import { gameboard, enableFiring } from "./index.js";
 
 export default function createGameboard() {
     const yourShips = document.querySelector(".your-ships");
@@ -142,7 +142,7 @@ function placeShips(squares, dragging) {
         const smallShipArea = document.querySelector(".small-ships");
         const bigShipArea = document.querySelector(".big-ships");
         if (smallShipArea.firstElementChild === null && bigShipArea.firstElementChild === null) {
-            gameLoop();
+           enableFiring();
         }
     }
     else {

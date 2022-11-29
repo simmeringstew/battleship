@@ -12,7 +12,6 @@ window.onload = () => {
     createGameboard();
     createPlayerShips();
     const computer = new Computer();
-    console.log(gameboard.computerShipLocations);
 }
 
 const ships = document.querySelectorAll(".unplayed-ship");
@@ -38,3 +37,7 @@ draggables.forEach((item) => {
         item.classList.remove("dragging");
     });
 });
+
+export function gameLoop() {
+    console.log("Game Started");
+}

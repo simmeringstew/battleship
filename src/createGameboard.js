@@ -1,5 +1,5 @@
 import Ship from "./classes/ship.js";
-import { gameboard } from "./index.js";
+import { gameboard, gameLoop } from "./index.js";
 
 export default function createGameboard() {
     const yourShips = document.querySelector(".your-ships");
@@ -139,6 +139,11 @@ function placeShips(squares, dragging) {
         const ship = new Ship(squares.length, squares);
         ship.addCoordinates(ship.squares);
         gameboard.updatePlayerShipLocations(ship);
+        const smallShipArea = document.querySelector(".small-ships");
+        const bigShipArea = document.querySelector(".big-ships");
+        if (smallShipArea.firstElementChild === null && bigShipArea.firstElementChild === null) {
+            gameLoop();
+        }
     }
     else {
         return;

@@ -136,8 +136,9 @@ function placeShips(squares, dragging) {
             squares[i].classList.add("played-ship");
             dragging.remove();
         }
-        const ship = new Ship(squares.length, squares, false);
-        gameboard.updatePlayerShipLocations(ship.squares);
+        const ship = new Ship(squares.length, squares);
+        ship.addCoordinates(ship.squares);
+        gameboard.updatePlayerShipLocations(ship.coordinates);
     }
     else {
         return;

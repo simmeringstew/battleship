@@ -70,7 +70,12 @@ async function gameLoop(row, column, square) {
         gameInfo.textContent = "You Missed";
         square.setAttribute("id", "miss");
     }
-    // check for player win
+    gameboard.updateNumberOfComputerShips();
+    if (gameboard.numberOfComputerShips === 0) {
+        // make modal displaying player win
+        console.log("Player Wins");
+        return;
+    }
     await sleep(2000);
     gameInfo.textContent = "Computer's Turn";
     await sleep(2000);
@@ -90,7 +95,12 @@ async function gameLoop(row, column, square) {
         gameInfo.textContent = "Computer Missed!";
         changePlayerSquare(computerShot, isGood);
     }
-    // check for computer win
+    gameboard.updateNumberOfPlayerShips();
+    if (gameboard.numberOfPlayerShips === 0) {
+        // make modal displaying computer win
+        console.log("Computer Wins");
+        return;
+    }
     await sleep(2000);
     gameInfo.textContent = "Click a Square in the Right Box to Fire";
 }

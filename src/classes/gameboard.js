@@ -14,10 +14,22 @@ export default class Gameboard {
         this.computerShipLocations.push(ship);
     }
     updateNumberOfPlayerShips() {
-        return this.numberOfPlayerShips;
+        let totalShips = 0;
+        for (let i = 0; i < this.playerShipLocations.length; i++) {
+            if (!this.playerShipLocations[i].status) {
+                totalShips++;
+            }
+        }
+        this.numberOfPlayerShips = totalShips;
     }
     updateNumberOfComputerShips() {
-        return this.numberOfComputerShips;
+        let totalShips = 0;
+        for (let i = 0; i < this.computerShipLocations.length; i++) {
+            if (!this.computerShipLocations[i].status) {
+                totalShips++;
+            }
+        }
+        this.numberOfComputerShips = totalShips;
     }
     recievePlayerAttack(coordinates) {
         for (let i = 0; i < this.computerShipLocations.length; i++) {

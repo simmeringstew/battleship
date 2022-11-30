@@ -12,6 +12,7 @@ export const gameboard = new Gameboard();
 const computer = new Computer();
 
 window.onload = () => {
+    gameInfo.textContent = "Place your Ships in the Left Box";
     createGameboard();
     createPlayerShips();
 }
@@ -67,13 +68,12 @@ async function gameLoop(row, column, square) {
         }
     }
     else {
-        gameInfo.textContent = "You Missed";
+        gameInfo.textContent = "You Missed!";
         square.setAttribute("id", "miss");
     }
     gameboard.updateNumberOfComputerShips();
     if (gameboard.numberOfComputerShips === 0) {
-        // make modal displaying player win
-        gameInfo.textContent = "Player Wins!";
+        gameOver("player");
         return;
     }
     await sleep(2000);
@@ -106,8 +106,7 @@ async function gameLoop(row, column, square) {
     }
     gameboard.updateNumberOfPlayerShips();
     if (gameboard.numberOfPlayerShips === 0) {
-        // make modal displaying computer win
-        gameInfo.textContent = "Computer Wins!";
+        gameOver("Computer");
         return;
     }
     await sleep(2000);
@@ -128,4 +127,21 @@ function changePlayerSquare(coordinates, hit) {
     else {
         square.setAttribute("id", "miss");
     }
+}
+
+function gameOver(winner) {
+    const modal = document.querySelector(".modal");
+    const winnerText = modal.querySelector(".winner");
+    const playAgain = modal.querySelector(".play-again");
+    playAgain.addEventListener("click", () => {
+        window.location.reload();
+        return false;
+    });
+    if (winner === "player") {
+        winnerText.textContent = "Congrats, you Win!";
+    }
+    else {
+        winnerText.textContent = "You Lose!";
+    }
+    modal.setAttribute("id", "show");
 }

@@ -4,6 +4,11 @@ body {
     align-items: center;
 }
 
+#disableInput {
+    pointer-events: none;
+    user-select: none;
+}
+
 h1 {
     text-align: center;
     font-size: 3rem;

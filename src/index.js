@@ -5,6 +5,7 @@ import Computer from "./classes/computer.js";
 import createGameboard from "./createGameboard.js";
 import createPlayerShips from "./createPlayerShips.js";
 
+const page = document.querySelector("BODY");
 const gameInfo = document.querySelector("H1");
 
 export let alreadyPlacedCoordinates = [];
@@ -57,6 +58,7 @@ export function enableFiring() {
 }
 
 async function gameLoop(row, column, square) {
+    page.setAttribute("id", "disableInput");
     const playerShot = [row, column];
     const [isHit, sunkThisTurn] = gameboard.recievePlayerAttack(playerShot);
     if (isHit) {
@@ -111,6 +113,7 @@ async function gameLoop(row, column, square) {
     }
     await sleep(2000);
     gameInfo.textContent = "Click a Square in the Right Box to Fire";
+    page.removeAttribute("id", "disableInput");
 }
 
 function sleep(ms) {
@@ -144,4 +147,5 @@ function gameOver(winner) {
         winnerText.textContent = "You Lose!";
     }
     modal.setAttribute("id", "show");
+    page.removeAttribute("id", "disableInput");
 }

@@ -1,10 +1,9 @@
 import { arraysAreEqual } from "../helperFunctions.js";
 
 export default class Gameboard {
-    constructor(playerShipLocations = [], computerShipLocations = [], playedTiles = new Set(), numberOfPlayerShips = 10, numberOfComputerShips = 10) {
+    constructor(playerShipLocations = [], computerShipLocations = [], numberOfPlayerShips = 10, numberOfComputerShips = 10) {
         this.playerShipLocations = playerShipLocations;
         this.computerShipLocations = computerShipLocations;
-        this.playedTiles = playedTiles;
         this.numberOfPlayerShips = numberOfPlayerShips;
         this.numberOfComputerShips = numberOfComputerShips;
     }
@@ -13,9 +12,6 @@ export default class Gameboard {
     }
     updateComputerShipLocations(ship) {
         this.computerShipLocations.push(ship);
-    }
-    updatePlayedTiles() {
-        return this.playedTiles;
     }
     updateNumberOfPlayerShips() {
         return this.numberOfPlayerShips;
@@ -43,6 +39,22 @@ export default class Gameboard {
         return false;
     }
     revieveComputerAttack(coordinates) {
-
+        for (let i = 0; i < this.playerShipLocations.length; i++) {
+            for (let j = 0; j < this.playerShipLocations[i].coordinates.length; j++) {
+                for (let k = 0; k < this.playerShipLocations[i].coordinates[j].length; k++) {
+                    // hit
+                    if (arraysAreEqual(coordinates, this.playerShipLocations[i].coordinates[j][k])) {
+                        this.playerShipLocations[i].hit();
+                        this.playerShipLocations[i].isSunk();
+                        return true;
+                    }
+                    // miss
+                    else {
+                        continue;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

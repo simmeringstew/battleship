@@ -56,6 +56,7 @@ export function enableFiring() {
 }
 
 async function gameLoop(row, column, square) {
+    console.log(gameboard.playerShipLocations);
     const playerShot = [row, column];
     const isHit = gameboard.recievePlayerAttack(playerShot);
     if (isHit) {
@@ -69,9 +70,32 @@ async function gameLoop(row, column, square) {
     await sleep(2000);
     gameInfo.textContent = "Computer's Turn";
     await sleep(2000);
-    const computerShot = [0];
+    const computerShot = computer.makeShot();
+    const isGood = gameboard.revieveComputerAttack(computerShot);
+    if (isGood) {
+        gameInfo.textContent = "Computer Hits!";
+        changePlayerSquare(computerShot, isGood);
+    }
+    else {
+        gameInfo.textContent = "Computer Missed!";
+        changePlayerSquare(computerShot, isGood);
+    }
+    await sleep(2000);
+    gameInfo.textContent = "Click a Square in the Right Box to Fire";
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function changePlayerSquare(coordinates, hit) {
+    const playerShipArea = document.querySelector(".your-ships");
+    const row = playerShipArea.querySelector(`[data-value="${coordinates[0]}"]`);
+    const square = row.querySelector(`[data-key="${coordinates[1]}"]`);
+    if (hit) {
+        square.setAttribute("id", "hit");
+    }
+    else {
+        square.setAttribute("id", "miss");
+    }
 }

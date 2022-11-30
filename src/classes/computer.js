@@ -3,8 +3,9 @@ import { gameboard, alreadyPlacedCoordinates } from "../index.js";
 import Ship from "./ship.js";
 
 export default class Computer {
-    constructor() {
+    constructor(playedTiles = []) {
         this.ships = this.createShips();
+        this.playedTiles = playedTiles;
     }
     // check full ships if it selects one that has already been used just redo the whole ship
     createShips() {
@@ -117,6 +118,20 @@ export default class Computer {
                         break;
                     }
             }
+        }
+    }
+    makeShot() {
+        while (true) {
+            const row = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+            const column = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+            const shot = [row, column];
+            for (let i = 0; i < this.playedTiles.length; i++) {
+                if (arraysAreEqual(shot, this.playedTiles[i])) {
+                    continue;
+                }
+            }
+            this.playedTiles.push(shot);
+            return shot;
         }
     }
 }

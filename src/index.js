@@ -73,23 +73,32 @@ async function gameLoop(row, column, square) {
     gameboard.updateNumberOfComputerShips();
     if (gameboard.numberOfComputerShips === 0) {
         // make modal displaying player win
-        console.log("Player Wins");
+        gameInfo.textContent = "Player Wins!";
         return;
     }
     await sleep(2000);
     gameInfo.textContent = "Computer's Turn";
     await sleep(2000);
-    const computerShot = computer.makeShot();
+    let computerShot = undefined;
+    while (true) {
+        computerShot = computer.makeShot();
+        if (!computerShot) {
+            computer.previousHit = false;
+            continue;
+        }
+        break;
+    }
     const [isGood, sunkPlayerShip] = gameboard.revieveComputerAttack(computerShot);
     if (isGood) {
         gameInfo.textContent = "Computer Hits!";
+        computer.previousHit = true;
+        computer.previousShot = computerShot;
         changePlayerSquare(computerShot, isGood);
         if (sunkPlayerShip) {
             await sleep(1000);
+            computer.previousHit = false;
             gameInfo.textContent = "Computer Sunk a Ship!";
         }
-        // update computer that it hit to change how it chooses shots
-        // display message if a ship sinks and change the computer back to random shots
     }
     else {
         gameInfo.textContent = "Computer Missed!";
@@ -98,7 +107,7 @@ async function gameLoop(row, column, square) {
     gameboard.updateNumberOfPlayerShips();
     if (gameboard.numberOfPlayerShips === 0) {
         // make modal displaying computer win
-        console.log("Computer Wins");
+        gameInfo.textContent = "Computer Wins!";
         return;
     }
     await sleep(2000);

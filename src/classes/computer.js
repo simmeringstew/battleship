@@ -3,9 +3,11 @@ import { gameboard, alreadyPlacedCoordinates } from "../index.js";
 import Ship from "./ship.js";
 
 export default class Computer {
-    constructor(playedTiles = []) {
+    constructor(playedTiles = [], previousHit = false, previousShot = undefined) {
         this.ships = this.createShips();
         this.playedTiles = playedTiles;
+        this.previousHit = previousHit;
+        this.previousShot = previousShot;
     }
     // check full ships if it selects one that has already been used just redo the whole ship
     createShips() {
@@ -121,17 +123,62 @@ export default class Computer {
         }
     }
     makeShot() {
-        while (true) {
-            const row = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-            const column = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-            const shot = [row, column];
-            for (let i = 0; i < this.playedTiles.length; i++) {
-                if (arraysAreEqual(shot, this.playedTiles[i])) {
-                    continue;
+        if (!this.previousHit) {
+            loop1:
+                while (true) {
+                    const row = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+                    const column = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+                    const shot = [row, column];
+                    for (let i = 0; i < this.playedTiles.length; i++) {
+                        if (arraysAreEqual(shot, this.playedTiles[i])) {
+                            continue loop1;
+                        }
+                    }
+                    this.playedTiles.push(shot);
+                    return shot;
                 }
-            }
-            this.playedTiles.push(shot);
-            return shot;
+        }
+        else {
+            const previousRow = this.previousShot[0];
+            const previousColumn = this.previousShot[1];
+            let attempts = 200;
+            loop1:
+                while (attempts > 0) {
+                    const row = randomIntArray([previousRow, previousRow - 1, previousRow + 1]);
+                    if (row < 0 || row > 9) {
+                        attempts--;
+                        continue;
+                    }
+                    if (row !== previousRow) {
+                        const column = previousColumn;
+                        const shot = [row, column];
+                        for (let i = 0; i < this.playedTiles.length; i++) {
+                            if (arraysAreEqual(shot, this.playedTiles[i])) {
+                                attempts--;
+                                continue loop1;
+                            }
+                        }
+                        this.playedTiles.push(shot);
+                        return shot;
+                    }
+                    else {
+                        const column = randomIntArray([previousColumn + 1, previousColumn - 1]);
+                        if (column < 0 || column > 9) {
+                            attempts--;
+                            continue;
+                        }
+                        const shot = [row, column];
+                        for (let i = 0; i < this.playedTiles.length; i++) {
+                            if (arraysAreEqual(shot, this.playedTiles[i])) {
+                                attempts--;
+                                continue loop1;
+                            }
+                        }
+                        this.playedTiles.push(shot);
+                        return shot;
+                    }
+                }
+            return false;
         }
     }
 }

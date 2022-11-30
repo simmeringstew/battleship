@@ -56,30 +56,41 @@ export function enableFiring() {
 }
 
 async function gameLoop(row, column, square) {
-    console.log(gameboard.playerShipLocations);
     const playerShot = [row, column];
-    const isHit = gameboard.recievePlayerAttack(playerShot);
+    const [isHit, sunkThisTurn] = gameboard.recievePlayerAttack(playerShot);
     if (isHit) {
         gameInfo.textContent = "You Hit!";
         square.setAttribute("id", "hit");
+        if (sunkThisTurn) {
+            await sleep(1000);
+            gameInfo.textContent = "You Sunk a Ship!";
+        }
     }
     else {
         gameInfo.textContent = "You Missed";
         square.setAttribute("id", "miss");
     }
+    // check for player win
     await sleep(2000);
     gameInfo.textContent = "Computer's Turn";
     await sleep(2000);
     const computerShot = computer.makeShot();
-    const isGood = gameboard.revieveComputerAttack(computerShot);
+    const [isGood, sunkPlayerShip] = gameboard.revieveComputerAttack(computerShot);
     if (isGood) {
         gameInfo.textContent = "Computer Hits!";
         changePlayerSquare(computerShot, isGood);
+        if (sunkPlayerShip) {
+            await sleep(1000);
+            gameInfo.textContent = "Computer Sunk a Ship!";
+        }
+        // update computer that it hit to change how it chooses shots
+        // display message if a ship sinks and change the computer back to random shots
     }
     else {
         gameInfo.textContent = "Computer Missed!";
         changePlayerSquare(computerShot, isGood);
     }
+    // check for computer win
     await sleep(2000);
     gameInfo.textContent = "Click a Square in the Right Box to Fire";
 }

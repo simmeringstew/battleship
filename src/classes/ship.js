@@ -29,9 +29,10 @@ export default class Ship {
     isSunk() {
         if (this.health === 0) {
             this.status = true;
+            return true;
         }
         else {
-            return;
+            return false;
         }
     }
 }

@@ -26,8 +26,8 @@ export default class Gameboard {
                     // hit
                     if (arraysAreEqual(coordinates, this.computerShipLocations[i].coordinates[j][k])) {
                         this.computerShipLocations[i].hit();
-                        this.computerShipLocations[i].isSunk();
-                        return true;
+                        const sunkThisTurn = this.computerShipLocations[i].isSunk();
+                        return [true, sunkThisTurn];
                     }
                     // miss
                     else {
@@ -36,7 +36,7 @@ export default class Gameboard {
                 }
             }
         }
-        return false;
+        return [false, false];
     }
     revieveComputerAttack(coordinates) {
         for (let i = 0; i < this.playerShipLocations.length; i++) {
@@ -45,8 +45,8 @@ export default class Gameboard {
                     // hit
                     if (arraysAreEqual(coordinates, this.playerShipLocations[i].coordinates[j][k])) {
                         this.playerShipLocations[i].hit();
-                        this.playerShipLocations[i].isSunk();
-                        return true;
+                        const sunkThisTurn = this.playerShipLocations[i].isSunk();
+                        return [true, sunkThisTurn];
                     }
                     // miss
                     else {
@@ -55,6 +55,6 @@ export default class Gameboard {
                 }
             }
         }
-        return false;
+        return [false, false];
     }
 }

@@ -30,5 +30,8 @@ export default class Ship {
         if (this.health === 0) {
             this.status = true;
         }
+        else {
+            return;
+        }
     }
 }

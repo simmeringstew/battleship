@@ -14,7 +14,6 @@ const computer = new Computer();
 window.onload = () => {
     createGameboard();
     createPlayerShips();
-    console.log(gameboard.computerShipLocations);
 }
 
 const ships = document.querySelectorAll(".unplayed-ship");
@@ -56,7 +55,23 @@ export function enableFiring() {
     });
 }
 
-function gameLoop(row, column, sqaure) {
-    console.log(row);
-    console.log(column);
+async function gameLoop(row, column, square) {
+    const playerShot = [row, column];
+    const isHit = gameboard.recievePlayerAttack(playerShot);
+    if (isHit) {
+        gameInfo.textContent = "You Hit!";
+        square.setAttribute("id", "hit");
+    }
+    else {
+        gameInfo.textContent = "You Missed";
+        square.setAttribute("id", "miss");
+    }
+    await sleep(2000);
+    gameInfo.textContent = "Computer's Turn";
+    await sleep(2000);
+    const computerShot = [0];
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

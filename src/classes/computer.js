@@ -124,14 +124,14 @@ export default class Computer {
     }
     makeShot() {
         if (!this.previousHit) {
-            loop1:
+            getRowColumnLoop:
                 while (true) {
                     const row = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
                     const column = randomIntArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
                     const shot = [row, column];
                     for (let i = 0; i < this.playedTiles.length; i++) {
                         if (arraysAreEqual(shot, this.playedTiles[i])) {
-                            continue loop1;
+                            continue getRowColumnLoop;
                         }
                     }
                     this.playedTiles.push(shot);
@@ -142,7 +142,7 @@ export default class Computer {
             const previousRow = this.previousShot[0];
             const previousColumn = this.previousShot[1];
             let attempts = 200;
-            loop1:
+            attemptLoop:
                 while (attempts > 0) {
                     const row = randomIntArray([previousRow, previousRow - 1, previousRow + 1]);
                     if (row < 0 || row > 9) {
@@ -155,7 +155,7 @@ export default class Computer {
                         for (let i = 0; i < this.playedTiles.length; i++) {
                             if (arraysAreEqual(shot, this.playedTiles[i])) {
                                 attempts--;
-                                continue loop1;
+                                continue attemptLoop;
                             }
                         }
                         this.playedTiles.push(shot);
@@ -171,7 +171,7 @@ export default class Computer {
                         for (let i = 0; i < this.playedTiles.length; i++) {
                             if (arraysAreEqual(shot, this.playedTiles[i])) {
                                 attempts--;
-                                continue loop1;
+                                continue attemptLoop;
                             }
                         }
                         this.playedTiles.push(shot);

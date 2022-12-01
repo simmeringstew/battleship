@@ -3,10 +3,11 @@ import { gameboard, alreadyPlacedCoordinates } from "../index.js";
 import Ship from "./ship.js";
 
 export default class Computer {
-    constructor(playedTiles = [], previousHit = false, previousShot = undefined) {
+    constructor(playedTiles = [], previousHit = false, initialShot = undefined, previousShot = undefined) {
         this.ships = this.createShips();
         this.playedTiles = playedTiles;
         this.previousHit = previousHit;
+        this.initialShot = initialShot;
         this.previousShot = previousShot;
     }
     // check full ships if it selects one that has already been used just redo the whole ship
@@ -141,7 +142,7 @@ export default class Computer {
         else {
             const previousRow = this.previousShot[0];
             const previousColumn = this.previousShot[1];
-            let attempts = 200;
+            let attempts = 300;
             attemptLoop:
                 while (attempts > 0) {
                     const row = randomIntArray([previousRow, previousRow - 1, previousRow + 1]);

@@ -78,14 +78,14 @@ async function gameLoop(row, column, square) {
         gameOver("player");
         return;
     }
-    await sleep(2000);
+    await sleep(1000);
     gameInfo.textContent = "Computer's Turn";
-    await sleep(2000);
+    await sleep(1000);
     let computerShot = undefined;
     while (true) {
         computerShot = computer.makeShot();
         if (!computerShot) {
-            computer.previousHit = false;
+            computer.previousShot = computer.initialShot;
             continue;
         }
         break;
@@ -96,9 +96,13 @@ async function gameLoop(row, column, square) {
         computer.previousHit = true;
         computer.previousShot = computerShot;
         changePlayerSquare(computerShot, isGood);
+        if (computer.initialShot === undefined) {
+            computer.initialShot = computerShot;
+        }
         if (sunkPlayerShip) {
             await sleep(1000);
             computer.previousHit = false;
+            computer.initialShot = undefined;
             gameInfo.textContent = "Computer Sunk a Ship!";
         }
     }
@@ -111,7 +115,7 @@ async function gameLoop(row, column, square) {
         gameOver("Computer");
         return;
     }
-    await sleep(2000);
+    await sleep(1000);
     gameInfo.textContent = "Click a Square in the Right Box to Fire";
     page.removeAttribute("id", "disableInput");
 }
